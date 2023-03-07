@@ -1,0 +1,24 @@
+.main {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+.container {
+    width: 1020px;
+    margin: 0 auto;
+    padding: 0px 15px;
+}
+.row {
+    display: flex;
+}
+.logo {
+    margin-top: 86px;
+    margin-bottom: 16px;
+}
+
+.characters-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
