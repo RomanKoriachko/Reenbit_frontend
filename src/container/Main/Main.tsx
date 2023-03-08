@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import './Main.css'
 import CharacterItem from '../../components/CharecterItem/CharacterItem'
 import SearchInput from '../../components/SearchInput/SearchInput'
-import { changeSearchInput } from '../../redux/filterData'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 
@@ -66,13 +66,15 @@ const Main = (props: Props) => {
                 <div className="characters-wrapper">
                     {charactersData.length > 0
                         ? searchArr.map((el: CharactersArr) => (
-                              <div className="character-item" key={el.id}>
-                                  <CharacterItem
-                                      image={el.image}
-                                      name={el.name}
-                                      species={el.species}
-                                  />
-                              </div>
+                              <Link to={`/${el.id}`} key={el.id}>
+                                  <div className="character-item">
+                                      <CharacterItem
+                                          image={el.image}
+                                          name={el.name}
+                                          species={el.species}
+                                      />
+                                  </div>
+                              </Link>
                           ))
                         : undefined}
                 </div>

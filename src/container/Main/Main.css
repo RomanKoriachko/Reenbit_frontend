@@ -22,3 +22,7 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.characters-wrapper > a {
+    text-decoration: none;
+    color: black;
+}
