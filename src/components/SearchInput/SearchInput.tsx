@@ -1,16 +1,17 @@
 import { changeSearchInput } from '../../redux/filterData'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { useAppDispatch } from '../../redux/hooks'
 import './SearchInput.css'
 
 type Props = {}
 
 const SearchInput = (props: Props) => {
-    const searchState = useAppSelector((state) => state.filterDataState)
     const dispatch = useAppDispatch()
 
     const changeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeSearchInput(e.target.value))
     }
+
+    const localSearchData = localStorage.getItem('searchinput')
 
     return (
         <div className="search row">
@@ -20,7 +21,7 @@ const SearchInput = (props: Props) => {
                 type="text"
                 placeholder="Filter by name..."
                 onChange={changeSearch}
-                value={searchState}
+                value={localSearchData ? localSearchData : ''}
             />
         </div>
     )

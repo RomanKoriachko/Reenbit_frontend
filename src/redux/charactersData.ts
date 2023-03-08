@@ -31,17 +31,17 @@ export const fetchCharacters = createAsyncThunk(
     }
 )
 
-const initialState: CharacterData | null = null
+const initialState: CharacterData[] = []
 
 export const charactersData = createSlice({
     name:"charactersData",
     initialState,
-    reducers:{},
+    reducers:{
+    },
     extraReducers: (builder) => {
         builder
         .addCase(fetchCharacters.fulfilled, (state, action) => {
-            let cloneData = Object.assign({}, action.payload)
-            return cloneData
+            state.push(action.payload)
         })
     }
 })

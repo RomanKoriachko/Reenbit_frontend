@@ -7,6 +7,7 @@ export const filterData = createSlice({
     initialState,
     reducers:{
         changeSearchInput: (state, action) => {
+            localStorage.setItem('searchinput', action.payload)
             return action.payload
         }
     },

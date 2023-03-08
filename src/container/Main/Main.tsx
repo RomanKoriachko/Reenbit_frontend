@@ -7,15 +7,6 @@ import SearchInput from '../../components/SearchInput/SearchInput'
 
 type Props = {}
 
-type CharacterData = {
-    info: {
-        count: number
-        next: null | string
-        pages: number
-        prev: null | string
-    }
-    results: CharactersArr[]
-}
 type CharactersArr = {
     id: number
     image: string
@@ -37,9 +28,11 @@ const Main = (props: Props) => {
         dispatch(fetchCharacters())
     }, [])
 
-    const sortedArr: CharacterData = Object.assign({}, charactersData)
-    if (sortedArr.results) {
-        sortedArr.results.sort(function (a, b) {
+    let sortedArr = [...charactersData]
+
+    let sortedCharacterArr: [] | CharactersArr[] = []
+    if (sortedArr.length > 0) {
+        sortedCharacterArr = sortedArr[0].results.slice().sort(function (a, b) {
             var nameA = a.name.toLowerCase(),
                 nameB = b.name.toLowerCase()
             if (nameA < nameB) return -1
@@ -48,14 +41,25 @@ const Main = (props: Props) => {
         })
     }
 
+    const localSearchData = localStorage.getItem('searchinput')
+
+    let searchArr
+    if (localSearchData !== '' && localSearchData !== null) {
+        searchArr = sortedCharacterArr.filter((element: CharactersArr) =>
+            element.name.toLowerCase().includes(localSearchData.toLowerCase())
+        )
+    } else {
+        searchArr = [...sortedCharacterArr]
+    }
+
     return (
         <main className="main">
             <div className="container">
                 <img className="logo" src="../../../images/logo.png" alt="" />
                 <SearchInput />
                 <div className="characters-wrapper">
-                    {charactersData !== null
-                        ? sortedArr.results.map((el: CharactersArr) => (
+                    {charactersData.length > 0
+                        ? searchArr.map((el: CharactersArr) => (
                               <div className="character-item" key={el.id}>
                                   <CharacterItem
                                       image={el.image}
