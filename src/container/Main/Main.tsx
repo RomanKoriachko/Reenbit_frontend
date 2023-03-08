@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import './Main.css'
 import CharacterItem from '../../components/CharecterItem/CharacterItem'
 import SearchInput from '../../components/SearchInput/SearchInput'
+import { changeSearchInput } from '../../redux/filterData'
 
 type Props = {}
 
@@ -22,6 +23,7 @@ type CharactersArr = {
 
 const Main = (props: Props) => {
     const charactersData = useAppSelector((state) => state.characterDataStore)
+    const searchData = useAppSelector((state) => state.filterDataState)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -44,7 +46,11 @@ const Main = (props: Props) => {
     const localSearchData = localStorage.getItem('searchinput')
 
     let searchArr
-    if (localSearchData !== '' && localSearchData !== null) {
+    if (searchData !== '') {
+        searchArr = sortedCharacterArr.filter((element: CharactersArr) =>
+            element.name.toLowerCase().includes(searchData.toLowerCase())
+        )
+    } else if (searchData === '' && localSearchData !== null) {
         searchArr = sortedCharacterArr.filter((element: CharactersArr) =>
             element.name.toLowerCase().includes(localSearchData.toLowerCase())
         )
