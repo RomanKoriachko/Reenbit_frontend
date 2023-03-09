@@ -71,3 +71,38 @@
     background: rgba(33, 33, 33, 0.08);
     margin-top: 12px;
 }
+
+/* Mobile */
+@media(max-width: 576px) {
+    .back-btn {
+        margin-left: 24px;
+    }
+    .character-page-content {
+        margin-top: 78px;
+    }
+    .character-page-img {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 34px;
+    }
+    .character-page-img > img {
+        width: 150px;
+        height: 150px;
+    }
+    .character-page-name {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 35px;
+    }
+    .character-page-information {
+        text-align: left;
+        margin-bottom: 25px;
+    }
+    .character-page-item {
+        width: 100%;
+        padding: 0px 8px 9px 16px;
+    }
+    .underline {
+        margin-right: 8px;
+    }
+}

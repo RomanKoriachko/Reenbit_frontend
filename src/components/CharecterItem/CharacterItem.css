@@ -2,6 +2,11 @@
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
     border-radius: 4px;
     height: 100%;
+    width: 100%;
+}
+.character-item > a {
+    text-decoration: none;
+    color: black;
 }
 .character-img {
     width: 100%;
@@ -25,4 +30,11 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 21px;
+}
+
+/* Mobile */
+@media(max-width: 576px) {
+    .character-img {
+        height: 230px;
+    }
 }

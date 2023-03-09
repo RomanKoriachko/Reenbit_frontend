@@ -66,15 +66,15 @@ const Main = (props: Props) => {
                 <div className="characters-wrapper">
                     {charactersData.length > 0
                         ? searchArr.map((el: CharactersArr) => (
-                              <Link to={`/${el.id}`} key={el.id}>
-                                  <div className="character-item">
+                              <div className="character-item" key={el.id}>
+                                  <Link to={`/${el.id}`}>
                                       <CharacterItem
                                           image={el.image}
                                           name={el.name}
                                           species={el.species}
                                       />
-                                  </div>
-                              </Link>
+                                  </Link>
+                              </div>
                           ))
                         : undefined}
                 </div>
