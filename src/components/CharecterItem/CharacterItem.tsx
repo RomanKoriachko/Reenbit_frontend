@@ -1,7 +1,5 @@
 import './CharacterItem.css'
 
-type Props = {}
-
 type CharacterElementsType = {
     image: string
     name: string

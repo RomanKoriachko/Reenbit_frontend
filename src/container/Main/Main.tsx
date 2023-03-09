@@ -28,6 +28,7 @@ const Main = (props: Props) => {
 
     useEffect(() => {
         dispatch(fetchCharacters())
+        // eslint-disable-next-line
     }, [])
 
     let sortedArr = [...charactersData]
