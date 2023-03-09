@@ -15,7 +15,7 @@ const CharacterPage = (props: Props) => {
 
     useEffect(() => {
         dispatch(fetchCharacters())
-    }, [])
+    }, [dispatch])
 
     let currentData
     if (characterData.length > 0) {

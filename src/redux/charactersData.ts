@@ -36,8 +36,7 @@ const initialState: CharacterData[] = []
 export const charactersData = createSlice({
     name:"charactersData",
     initialState,
-    reducers:{
-    },
+    reducers:{},
     extraReducers: (builder) => {
         builder
         .addCase(fetchCharacters.fulfilled, (state, action) => {
@@ -46,6 +45,6 @@ export const charactersData = createSlice({
     }
 })
 
-export const {} = charactersData.actions
+// export const {} = charactersData.actions
 
 export default charactersData.reducer
