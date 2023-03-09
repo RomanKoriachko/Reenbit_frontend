@@ -1,17 +1,20 @@
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import App from './container/App/App'
 import { store } from './redux/store'
 import reportWebVitals from './reportWebVitals'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-    <HashRouter>
+    <BrowserRouter>
         <Provider store={store}>
-            <App />
+            <GoogleOAuthProvider clientId="964905779160-jpqhn39537tvr1k3ggg4vjproo4vdkht.apps.googleusercontent.com">
+                <App />
+            </GoogleOAuthProvider>
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
 )
 
 reportWebVitals()
