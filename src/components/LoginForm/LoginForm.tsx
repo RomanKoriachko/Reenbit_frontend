@@ -9,17 +9,27 @@ import './LoginForm.css'
 type Props = {}
 
 const LoginForm = (props: Props) => {
-    const [user, setUser] = useState<Object | null>(null)
+    const raw = localStorage.getItem('userData')
+    let localUserData = {}
+    if (raw) {
+        localUserData = JSON.parse(raw)
+    }
+
+    const [user, setUser] = useState<Object | null>(localUserData)
 
     function handleCallbackResponse(response: CredentialResponse) {
-        console.log(response)
         if (response.credential !== undefined) {
             const userObject: Object = jwt_decode(response.credential)
+            localStorage.setItem('userData', JSON.stringify(userObject))
             setUser(userObject)
         }
     }
 
+    console.log(user)
+    console.log(localUserData)
+
     const onSignOutClick = () => {
+        localStorage.setItem('userData', JSON.stringify(null))
         setUser(null)
     }
 
