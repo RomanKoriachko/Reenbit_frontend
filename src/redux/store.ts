@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import charactersData from "./charactersData";
 import filterData from "./filterData";
+import pageReducer from "./pageReducer";
 
 
 export const store = configureStore({
     reducer: {
         characterDataStore: charactersData,
         filterDataState: filterData,
+        pageState: pageReducer,
     }
 })
 

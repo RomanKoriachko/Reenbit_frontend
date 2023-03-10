@@ -1,10 +1,14 @@
-import { fetchCharacters } from '../../redux/charactersData'
+import {
+    clearCharacterDataState,
+    fetchCharacters,
+} from '../../redux/charactersData'
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import './Main.css'
 import CharacterItem from '../../components/CharecterItem/CharacterItem'
 import SearchInput from '../../components/SearchInput/SearchInput'
 import { Link } from 'react-router-dom'
+import { goToPage, nextPage, prevPage } from '../../redux/pageReducer'
 
 type Props = {}
 
@@ -24,11 +28,17 @@ type CharactersArr = {
 const Main = (props: Props) => {
     const charactersData = useAppSelector((state) => state.characterDataStore)
     const searchData = useAppSelector((state) => state.filterDataState)
+    const pageState = useAppSelector((state) => state.pageState)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchCharacters(`https://rickandmortyapi.com/api/character`))
-    }, [dispatch])
+        dispatch(clearCharacterDataState())
+        dispatch(
+            fetchCharacters(
+                `https://rickandmortyapi.com/api/character?page=${pageState}`
+            )
+        )
+    }, [pageState])
 
     let sortedArr = [...charactersData]
 
@@ -58,6 +68,41 @@ const Main = (props: Props) => {
         searchArr = [...sortedCharacterArr]
     }
 
+    const onNextPageClick = () => {
+        dispatch(nextPage())
+    }
+    const onPrevPageClick = () => {
+        dispatch(prevPage())
+    }
+
+    let lastPage = 42
+    if (charactersData.length > 0) {
+        lastPage = charactersData[0].info.pages
+    }
+
+    const [arrOfPages, setArrOfPages] = useState<number[]>([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    ])
+
+    const getNextSetOfPages = () => {
+        let newArr = []
+        for (let i = 0; i < arrOfPages.length; i++) {
+            newArr.push(arrOfPages[i] + 10)
+        }
+        setArrOfPages(newArr)
+    }
+    const getPrevSetOfPages = () => {
+        let newArr = []
+        for (let i = 0; i < arrOfPages.length; i++) {
+            newArr.push(arrOfPages[i] - 10)
+        }
+        setArrOfPages(newArr)
+    }
+
+    function removeExcessiveNumber(value: number) {
+        return value <= lastPage
+    }
+
     return (
         <main className="main">
             <div className="container">
@@ -78,8 +123,34 @@ const Main = (props: Props) => {
                           ))
                         : undefined}
                 </div>
-                <button>previous</button>
-                <button>next</button>
+                <button onClick={onPrevPageClick} disabled={pageState <= 1}>
+                    previous
+                </button>
+                {arrOfPages.includes(1) ? undefined : (
+                    <button onClick={getPrevSetOfPages}>...</button>
+                )}
+                {arrOfPages.filter(removeExcessiveNumber).map((element) => (
+                    <button
+                        key={element}
+                        onClick={() => dispatch(goToPage(element))}
+                    >
+                        {element}
+                    </button>
+                ))}
+                {arrOfPages.includes(lastPage) ? undefined : (
+                    <button
+                        onClick={getNextSetOfPages}
+                        disabled={arrOfPages.includes(42)}
+                    >
+                        ...
+                    </button>
+                )}
+                <button
+                    onClick={onNextPageClick}
+                    disabled={pageState >= lastPage}
+                >
+                    next
+                </button>
             </div>
         </main>
     )
