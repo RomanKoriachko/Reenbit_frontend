@@ -7,12 +7,17 @@ export const pageReducer = createSlice({
     initialState,
     reducers:{
         nextPage: (state) => {
-            return (state + 1)
+            state += 1
+            localStorage.setItem('page', JSON.stringify(state))
+            return (state)
         },
         prevPage: (state) => {
-            return (state - 1)
+            state -= 1
+            localStorage.setItem('page', JSON.stringify(state))
+            return (state)
         },
         goToPage: (state, action) => {
+            localStorage.setItem('page', JSON.stringify(action.payload))
             return action.payload
         }
     },

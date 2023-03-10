@@ -22,6 +22,22 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.page-btns {
+    background: transparent;
+    margin: 0 5px;
+    padding: 5px 9px;
+    border-radius: 50px;
+    border-color: transparent;
+    cursor: pointer;
+    margin-bottom: 50px;
+    transition: .5s all;
+}
+.page-btns:hover {
+    background: rgba(0, 0, 0, 0.164);
+}
+.page-btns.active {
+    border-color: black;
+}
 
 /* Laptop */
 @media(max-width: 1200px) {

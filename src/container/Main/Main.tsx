@@ -9,6 +9,7 @@ import CharacterItem from '../../components/CharecterItem/CharacterItem'
 import SearchInput from '../../components/SearchInput/SearchInput'
 import { Link } from 'react-router-dom'
 import { goToPage, nextPage, prevPage } from '../../redux/pageReducer'
+import { stringify } from 'querystring'
 
 type Props = {}
 
@@ -31,14 +32,22 @@ const Main = (props: Props) => {
     const pageState = useAppSelector((state) => state.pageState)
     const dispatch = useAppDispatch()
 
+    const raw = localStorage.getItem('page')
+    let localPageData = 1
+    if (raw) {
+        localPageData = JSON.parse(raw)
+    }
+
     useEffect(() => {
         dispatch(clearCharacterDataState())
         dispatch(
             fetchCharacters(
-                `https://rickandmortyapi.com/api/character?page=${pageState}`
+                `https://rickandmortyapi.com/api/character?page=${localPageData}`
             )
         )
-    }, [pageState])
+    }, [localPageData])
+
+    // Sorting Arr
 
     let sortedArr = [...charactersData]
 
@@ -67,6 +76,8 @@ const Main = (props: Props) => {
     } else {
         searchArr = [...sortedCharacterArr]
     }
+
+    // Pages
 
     const onNextPageClick = () => {
         dispatch(nextPage())
@@ -123,14 +134,23 @@ const Main = (props: Props) => {
                           ))
                         : undefined}
                 </div>
-                <button onClick={onPrevPageClick} disabled={pageState <= 1}>
-                    previous
+                <button
+                    className="page-btns"
+                    onClick={onPrevPageClick}
+                    disabled={localPageData <= 1}
+                >
+                    Previous
                 </button>
                 {arrOfPages.includes(1) ? undefined : (
-                    <button onClick={getPrevSetOfPages}>...</button>
+                    <button className="page-btns" onClick={getPrevSetOfPages}>
+                        ...
+                    </button>
                 )}
                 {arrOfPages.filter(removeExcessiveNumber).map((element) => (
                     <button
+                        className={`page-btns ${
+                            localPageData === element ? 'active' : ''
+                        }`}
                         key={element}
                         onClick={() => dispatch(goToPage(element))}
                     >
@@ -139,6 +159,7 @@ const Main = (props: Props) => {
                 ))}
                 {arrOfPages.includes(lastPage) ? undefined : (
                     <button
+                        className="page-btns"
                         onClick={getNextSetOfPages}
                         disabled={arrOfPages.includes(42)}
                     >
@@ -146,10 +167,11 @@ const Main = (props: Props) => {
                     </button>
                 )}
                 <button
+                    className="page-btns"
                     onClick={onNextPageClick}
-                    disabled={pageState >= lastPage}
+                    disabled={localPageData >= lastPage}
                 >
-                    next
+                    Next
                 </button>
             </div>
         </main>
