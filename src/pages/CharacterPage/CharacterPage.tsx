@@ -14,7 +14,7 @@ const CharacterPage = (props: Props) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchCharacters())
+        dispatch(fetchCharacters('https://rickandmortyapi.com/api/character'))
     }, [dispatch])
 
     let currentData

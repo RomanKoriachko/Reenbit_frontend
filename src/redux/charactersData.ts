@@ -24,8 +24,8 @@ type CharactersArr = {
 
 export const fetchCharacters = createAsyncThunk(
     'charactersData/fetchCharacters',
-    async function(){
-        const response = await fetch(`https://rickandmortyapi.com/api/character`)
+    async function(link: string){
+        const response = await fetch(link)
         const data = await response.json();
         return data
     }

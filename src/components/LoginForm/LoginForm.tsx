@@ -25,9 +25,6 @@ const LoginForm = (props: Props) => {
         }
     }
 
-    console.log(user)
-    console.log(localUserData)
-
     const onSignOutClick = () => {
         localStorage.setItem('userData', JSON.stringify(null))
         setUser(null)

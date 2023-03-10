@@ -1,5 +1,5 @@
 import { fetchCharacters } from '../../redux/charactersData'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import './Main.css'
 import CharacterItem from '../../components/CharecterItem/CharacterItem'
@@ -27,7 +27,7 @@ const Main = (props: Props) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchCharacters())
+        dispatch(fetchCharacters(`https://rickandmortyapi.com/api/character`))
     }, [dispatch])
 
     let sortedArr = [...charactersData]
@@ -78,6 +78,8 @@ const Main = (props: Props) => {
                           ))
                         : undefined}
                 </div>
+                <button>previous</button>
+                <button>next</button>
             </div>
         </main>
     )
