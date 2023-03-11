@@ -2,13 +2,14 @@ import {
     clearCharacterDataState,
     fetchCharacters,
 } from '../../redux/charactersData'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import './Main.css'
 import CharacterItem from '../../components/CharecterItem/CharacterItem'
 import SearchInput from '../../components/SearchInput/SearchInput'
 import { Link } from 'react-router-dom'
 import { goToPage, nextPage, prevPage } from '../../redux/pageReducer'
+import { setArrOfPages } from '../../redux/arrOfPagesReducer'
 
 type Props = {}
 
@@ -29,6 +30,7 @@ const Main = (props: Props) => {
     const charactersData = useAppSelector((state) => state.characterDataStore)
     const searchData = useAppSelector((state) => state.filterDataState)
     const pageState = useAppSelector((state) => state.pageState)
+    const arrOfPages = useAppSelector((state) => state.arrOfPagesState)
     const dispatch = useAppDispatch()
 
     const raw = localStorage.getItem('page')
@@ -78,11 +80,49 @@ const Main = (props: Props) => {
 
     // Pages
 
+    useEffect(() => {
+        localStorage.setItem('arrOfPages', JSON.stringify(arrOfPages))
+    }, [arrOfPages])
+
     const onNextPageClick = () => {
         dispatch(nextPage())
+        if (
+            localPageData >= 10 &&
+            localPageData < 20 &&
+            arrOfPages.includes(1)
+        ) {
+            getNextSetOfPages()
+        } else if (
+            localPageData >= 20 &&
+            localPageData < 30 &&
+            arrOfPages.includes(11)
+        ) {
+            getNextSetOfPages()
+        } else if (
+            localPageData >= 30 &&
+            localPageData < 40 &&
+            arrOfPages.includes(21)
+        ) {
+            getNextSetOfPages()
+        } else if (
+            localPageData >= 40 &&
+            localPageData < 44 &&
+            arrOfPages.includes(31)
+        ) {
+            getNextSetOfPages()
+        }
     }
     const onPrevPageClick = () => {
         dispatch(prevPage())
+        if (localPageData < 42 && arrOfPages.includes(41)) {
+            getPrevSetOfPages()
+        } else if (localPageData < 32 && arrOfPages.includes(31)) {
+            getPrevSetOfPages()
+        } else if (localPageData < 22 && arrOfPages.includes(21)) {
+            getPrevSetOfPages()
+        } else if (localPageData < 12 && arrOfPages.includes(11)) {
+            getPrevSetOfPages()
+        }
     }
 
     let lastPage = 42
@@ -90,28 +130,29 @@ const Main = (props: Props) => {
         lastPage = charactersData[0].info.pages
     }
 
-    const [arrOfPages, setArrOfPages] = useState<number[]>([
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    ])
-
     const getNextSetOfPages = () => {
         let newArr = []
         for (let i = 0; i < arrOfPages.length; i++) {
             newArr.push(arrOfPages[i] + 10)
         }
-        setArrOfPages(newArr)
+        dispatch(setArrOfPages(newArr))
+        localStorage.setItem('arrOfPages', JSON.stringify(arrOfPages))
     }
     const getPrevSetOfPages = () => {
         let newArr = []
         for (let i = 0; i < arrOfPages.length; i++) {
             newArr.push(arrOfPages[i] - 10)
         }
-        setArrOfPages(newArr)
+        dispatch(setArrOfPages(newArr))
+        localStorage.setItem('arrOfPages', JSON.stringify(arrOfPages))
     }
 
     function removeExcessiveNumber(value: number) {
         return value <= lastPage
     }
+
+    console.log(arrOfPages)
+    console.log(localPageData)
 
     return (
         <main className="main">

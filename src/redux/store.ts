@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import arrOfPagesReducer from "./arrOfPagesReducer";
 import charactersData from "./charactersData";
 import filterData from "./filterData";
 import pageReducer from "./pageReducer";
@@ -9,6 +10,7 @@ export const store = configureStore({
         characterDataStore: charactersData,
         filterDataState: filterData,
         pageState: pageReducer,
+        arrOfPagesState: arrOfPagesReducer,
     }
 })
 
