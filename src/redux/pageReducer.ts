@@ -1,6 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit"
 
-const initialState: number = 1
+const raw = localStorage.getItem('page')
+let localPageData = 1
+if (raw) {
+    localPageData = JSON.parse(raw)
+}
+
+const initialState: number = localPageData
 
 export const pageReducer = createSlice({
     name:"charactersData",

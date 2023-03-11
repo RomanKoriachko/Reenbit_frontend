@@ -78,15 +78,6 @@ const Main = (props: Props) => {
 
     // Pages
 
-    useEffect(() => {
-        const raw = localStorage.getItem('page')
-        let localPageData = 1
-        if (raw) {
-            localPageData = JSON.parse(raw)
-        }
-        dispatch(goToPage(localPageData))
-    }, [dispatch])
-
     const onNextPageClick = () => {
         dispatch(nextPage())
     }
