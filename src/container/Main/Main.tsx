@@ -28,6 +28,7 @@ type CharactersArr = {
 const Main = (props: Props) => {
     const charactersData = useAppSelector((state) => state.characterDataStore)
     const searchData = useAppSelector((state) => state.filterDataState)
+    const pageState = useAppSelector((state) => state.pageState)
     const dispatch = useAppDispatch()
 
     const raw = localStorage.getItem('page')
@@ -61,6 +62,8 @@ const Main = (props: Props) => {
     }
 
     const localSearchData = localStorage.getItem('searchinput')
+
+    // localStorage.removeItem('page')
 
     let searchArr
     if (searchData !== '') {
@@ -135,7 +138,7 @@ const Main = (props: Props) => {
                 <button
                     className="page-btns"
                     onClick={onPrevPageClick}
-                    disabled={localPageData <= 1}
+                    disabled={pageState <= 1}
                 >
                     Previous
                 </button>
@@ -167,7 +170,7 @@ const Main = (props: Props) => {
                 <button
                     className="page-btns"
                     onClick={onNextPageClick}
-                    disabled={localPageData >= lastPage}
+                    disabled={pageState >= lastPage}
                 >
                     Next
                 </button>
