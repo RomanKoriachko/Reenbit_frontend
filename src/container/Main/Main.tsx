@@ -115,6 +115,28 @@ const Main = (props: Props) => {
         return value <= lastPage
     }
 
+    const getCurrentStackOfPages = (number: number) => {
+        let tempArr: number[] = []
+        for (let i = 0; i < arrOfPages.length; i++) {
+            tempArr.push(arrOfPages[i] + number)
+        }
+        setArrOfPages(tempArr)
+    }
+
+    console.log(localPageData)
+
+    useEffect(() => {
+        if (localPageData >= 11 && localPageData < 21) {
+            getCurrentStackOfPages(10)
+        } else if (localPageData >= 21 && localPageData < 31) {
+            getCurrentStackOfPages(20)
+        } else if (localPageData >= 31 && localPageData < 41) {
+            getCurrentStackOfPages(30)
+        } else if (localPageData >= 41) {
+            getCurrentStackOfPages(40)
+        }
+    }, [])
+
     return (
         <main className="main">
             <div className="container">
