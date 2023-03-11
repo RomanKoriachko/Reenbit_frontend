@@ -136,7 +136,6 @@ const Main = (props: Props) => {
             newArr.push(arrOfPages[i] + 10)
         }
         dispatch(setArrOfPages(newArr))
-        localStorage.setItem('arrOfPages', JSON.stringify(arrOfPages))
     }
     const getPrevSetOfPages = () => {
         let newArr = []
@@ -144,15 +143,23 @@ const Main = (props: Props) => {
             newArr.push(arrOfPages[i] - 10)
         }
         dispatch(setArrOfPages(newArr))
-        localStorage.setItem('arrOfPages', JSON.stringify(arrOfPages))
     }
 
     function removeExcessiveNumber(value: number) {
         return value <= lastPage
     }
 
-    console.log(arrOfPages)
-    console.log(localPageData)
+    // Disable hover on mobile
+
+    if (
+        'ontouchstart' in window ||
+        (window.Touch && document instanceof Touch)
+    ) {
+        console.log('this is a touch device')
+    } else {
+        console.log('this is not a touch device')
+        document.body.classList.add('no-touch')
+    }
 
     return (
         <main className="main">
@@ -174,45 +181,56 @@ const Main = (props: Props) => {
                           ))
                         : undefined}
                 </div>
-                <button
-                    className="page-btns"
-                    onClick={onPrevPageClick}
-                    disabled={pageState <= 1}
-                >
-                    Previous
-                </button>
-                {arrOfPages.includes(1) ? undefined : (
-                    <button className="page-btns" onClick={getPrevSetOfPages}>
-                        ...
-                    </button>
-                )}
-                {arrOfPages.filter(removeExcessiveNumber).map((element) => (
-                    <button
-                        className={`page-btns ${
-                            localPageData === element ? 'active' : ''
-                        }`}
-                        key={element}
-                        onClick={() => dispatch(goToPage(element))}
-                    >
-                        {element}
-                    </button>
-                ))}
-                {arrOfPages.includes(lastPage) ? undefined : (
+                <div className="row navigation">
                     <button
                         className="page-btns"
-                        onClick={getNextSetOfPages}
-                        disabled={arrOfPages.includes(42)}
+                        onClick={onPrevPageClick}
+                        disabled={pageState <= 1}
                     >
-                        ...
+                        Previous
                     </button>
-                )}
-                <button
-                    className="page-btns"
-                    onClick={onNextPageClick}
-                    disabled={pageState >= lastPage}
-                >
-                    Next
-                </button>
+                    <div className="pages-wrapper">
+                        {arrOfPages.includes(1) ? undefined : (
+                            <button
+                                className="page-btns"
+                                onClick={getPrevSetOfPages}
+                            >
+                                ...
+                            </button>
+                        )}
+                        {arrOfPages
+                            .filter(removeExcessiveNumber)
+                            .map((element) => (
+                                <button
+                                    className={`page-btns ${
+                                        localPageData === element
+                                            ? 'active'
+                                            : ''
+                                    }`}
+                                    key={element}
+                                    onClick={() => dispatch(goToPage(element))}
+                                >
+                                    {element}
+                                </button>
+                            ))}
+                        {arrOfPages.includes(lastPage) ? undefined : (
+                            <button
+                                className="page-btns"
+                                onClick={getNextSetOfPages}
+                                disabled={arrOfPages.includes(42)}
+                            >
+                                ...
+                            </button>
+                        )}
+                    </div>
+                    <button
+                        className="page-btns"
+                        onClick={onNextPageClick}
+                        disabled={pageState >= lastPage}
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </main>
     )

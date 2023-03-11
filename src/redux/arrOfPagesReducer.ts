@@ -13,7 +13,6 @@ export const arrOfPagesReducer = createSlice({
     initialState,
     reducers:{
         setArrOfPages: (state, action) => {
-            localStorage.setItem('arrOfPages', JSON.stringify(action.payload))
             return action.payload
         }
     },

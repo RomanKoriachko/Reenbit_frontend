@@ -22,7 +22,11 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.navigation {
+    justify-content: center;
+}
 .page-btns {
+    font-family: 'Roboto', sans-serif;
     background: transparent;
     margin: 0 5px;
     padding: 5px 9px;
@@ -32,12 +36,13 @@
     margin-bottom: 50px;
     transition: .5s all;
 }
-.page-btns:hover {
+.no-touch .page-btns:hover {
     background: rgba(0, 0, 0, 0.164);
 }
 .page-btns.active {
     border-color: black;
 }
+
 
 /* Laptop */
 @media(max-width: 1200px) {
@@ -50,6 +55,15 @@
 @media(max-width: 992px) {
     .logo {
         width: 70%;
+    }
+    .navigation {
+        justify-content: space-evenly;
+    }
+    .pages-wrapper {
+        display: none;
+    }
+    .page-btns {
+        font-size: 21px;
     }
 }
 
@@ -68,5 +82,4 @@
         margin-top: 32px;
         gap: 32px;
     }
-    
 }
