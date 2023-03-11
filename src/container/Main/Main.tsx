@@ -9,7 +9,6 @@ import CharacterItem from '../../components/CharecterItem/CharacterItem'
 import SearchInput from '../../components/SearchInput/SearchInput'
 import { Link } from 'react-router-dom'
 import { goToPage, nextPage, prevPage } from '../../redux/pageReducer'
-import { stringify } from 'querystring'
 
 type Props = {}
 
@@ -29,7 +28,6 @@ type CharactersArr = {
 const Main = (props: Props) => {
     const charactersData = useAppSelector((state) => state.characterDataStore)
     const searchData = useAppSelector((state) => state.filterDataState)
-    const pageState = useAppSelector((state) => state.pageState)
     const dispatch = useAppDispatch()
 
     const raw = localStorage.getItem('page')
@@ -45,7 +43,7 @@ const Main = (props: Props) => {
                 `https://rickandmortyapi.com/api/character?page=${localPageData}`
             )
         )
-    }, [localPageData])
+    }, [localPageData]) // eslint-disable-line react-hooks/exhaustive-deps
 
     // Sorting Arr
 
