@@ -1,0 +1,33 @@
+.navigation {
+    justify-content: center;
+}
+.page-btns {
+    font-family: 'Roboto', sans-serif;
+    background: transparent;
+    margin: 0 5px;
+    padding: 5px 9px;
+    border-radius: 50px;
+    border-color: transparent;
+    cursor: pointer;
+    margin-bottom: 50px;
+    transition: .5s all;
+}
+.no-touch .page-btns:hover {
+    background: rgba(0, 0, 0, 0.164);
+}
+.page-btns.active {
+    border-color: black;
+}
+
+/* Tablet */
+@media(max-width: 992px) {
+    .navigation {
+        justify-content: space-evenly;
+    }
+    .pages-wrapper {
+        display: none;
+    }
+    .page-btns {
+        font-size: 21px;
+    }
+}
